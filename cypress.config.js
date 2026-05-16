@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  projectId: "htn1m2",
   e2e: {
     baseUrl: 'https://www.saucedemo.com/',
     viewportWidth: 1366,
@@ -11,7 +12,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-   projectId: "htn1m2",
+   
 
   retries: {
     runMode: 2,
