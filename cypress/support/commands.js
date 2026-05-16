@@ -23,22 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import LoginPage from "../pages/LoginPage"
+import InventoryPage from "../pages/InventoryPage"
+import CartPage from "../pages/CartPage"
 
 Cypress.Commands.add('loginAsStandard', () => {
   cy.visit('/')
-  cy.get('[data-test="username"]').type('standard_user')
-  cy.get('[data-test="password"]').type('secret_sauce')
-  cy.get('[data-test="login-button"]').click()
+  LoginPage.login(
+    'standard_user',
+    'secret_sauce'
+  )
 })
 
 Cypress.Commands.add('loginUntilCart', () => {
   cy.visit('/')
-  cy.get('[data-test="username"]').type('standard_user')
-  cy.get('[data-test="password"]').type('secret_sauce')
-  cy.get('[data-test="login-button"]').click()
-  cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
-  cy.get('[data-test="shopping-cart-link"]').click()
-  cy.get('[data-test="checkout"]').should('be.visible')
-  cy.get('[data-test="checkout"]').click()
+  LoginPage.login(
+    'standard_user',
+    'secret_sauce'
+  )
+  InventoryPage.elements.addToCartButton('Sauce Labs Backpack').click()
+  InventoryPage.elements.shoppingCartBadge().click()
+  CartPage.elements.checkoutButton().should('be.visible')
+  CartPage.elements.checkoutButton().click()
   cy.url().should('include', '/checkout-step-one.html')
 })
